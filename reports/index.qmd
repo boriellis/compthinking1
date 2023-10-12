@@ -1,0 +1,85 @@
+## **BIOE215 Fall 2023**
+
+## Aspen Ellis
+
+## *Computational Thinking 1 Assessment*
+
+(Team Porifera because I am but a babe)
+
+**Q1**
+
+Match the following types of real-world data to their equivalent R type and explain your reasoning.
+
+-   Real world data: scientific names, the count of plants in a quadrat, whether or not it rained on a sequence of days, and the reaction times of birds to disturbances in seconds
+
+    -   *scientific names = character, because it's text*
+
+    -   *\# plants in a quadrat = integer, because it's whole numbers*
+
+    -   *whether or not it rained = logical, because it's y/n data*
+
+    -   *reaction times = numeric, because it's not necessarily whole numbers, could need decimals*
+
+**Q2**
+
+```{r}
+bird_mass_g <- c(100.1, 99.2, 99.3, NA, 100.0, 101.5, 94.7, 99.2, 108.2)
+mean_mass <- mean(bird_mass_g)
+sd_mass <- sd(bird_mass_g)
+is_outlier <- bird_mass_g > mean_mass + 3 * sd_mass
+num_outliers <- sum(is_outlier)
+```
+
+-   In plain english, what does this code chunk do?
+
+    -   *It:*
+
+        -   *makes a vector of bird masses*
+
+        -   *calculates the mean mass of the birds in the vector and stores it to `mean_mass`*
+
+        -   *calculates the standard deviation of the bird mass and stores it to `sd_mass`*
+
+        -   *defines outliers as values where the mass is greater that the mean +3\*SD*
+
+        -   *counts the number of outliers and stores it to `num_outliers`*
+
+-   Two of the lines have mistakes that keep the code from doing what it's supposed to. What are the mistakes and how would you fix them?
+
+    -   *the mistakes are that the `mean_mass` and `sd_mass` lines forget to remove the NAs, so don't work. You could fix by creating a new vector with the NAs removed:*
+
+        ```{r}
+        bird_mass_g <- c(100.1, 99.2, 99.3, NA, 100.0, 101.5, 94.7, 99.2, 108.2)
+        bird_mass_g <- bird_mass_g[!is.na(bird_mass_g)]
+        mean_mass <- mean(bird_mass_g)
+        sd_mass <- sd(bird_mass_g)
+        is_outlier <- bird_mass_g > mean_mass + 3 * sd_mass
+        num_outliers <- sum(is_outlier)
+        ```
+
+-   What are the types of `bird_mass_g`, `is_outlier`, and `num_outliers`?
+
+    -   *`bird_mass_g` is numeric*
+
+    -   *`is_outlier` is logical*
+
+    -   *`num_outliers` is integer*
+
+**Q3**
+
+How could you change the first line of code in the following chunk so that `median_count` comes out to `5L`?
+
+```{r}
+quad_counts <- c(2L, 19L, 4L, 5L, 5L, 12L, 0L, 7L)
+valid_quads <- c(1, 2, 3, 5, 7) 2,19,4,5,0 0,2,4,5,19 # this is where I got Stuck
+quad_counts2 <- quad_counts[valid_quads]
+median_count <- median(quad_counts2)
+```
+
+Questions for max -
+
+what the hell is going on with PATs and when do I have to make new ones and stuff
+
+how do I use R projects to work off of multiple computers?
+
+I'm stuck on question 3 :(
