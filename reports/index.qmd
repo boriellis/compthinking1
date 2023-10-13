@@ -70,8 +70,8 @@ num_outliers <- sum(is_outlier)
 How could you change the first line of code in the following chunk so that `median_count` comes out to `5L`?
 
 ```{r}
-quad_counts <- c(2L, 19L, 4L, 5L, 5L, 12L, 0L, 7L)
-valid_quads <- c(1, 2, 3, 5, 7) 2,19,4,5,0 0,2,4,5,19 # this is where I got Stuck
+quad_counts <- c(2L, 19L, 4L, 5L, 5L, 12L, 5L, 7L)
+valid_quads <- c(1, 2, 3, 5, 7) # this is where I got Stuck
 quad_counts2 <- quad_counts[valid_quads]
 median_count <- median(quad_counts2)
 ```

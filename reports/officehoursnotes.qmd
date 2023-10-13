@@ -1,0 +1,223 @@
+# October 12 Office hours
+
+We need to somehow go from real world into R structure somehow, and in order to do that we need to understand vector structure and lists. That's what this review is about.
+
+list vectors and atomic vectors are two types of vectors.
+
+we're talking about factors now for some reason:
+
+```{r}
+names_chr <- c("aspen", "emily", "max", "millie", "salma")
+typeof(names_chr)
+names_fct <- factor(names_chr)
+typeof(names_fct)
+```
+
+I guess the takeaway from this example is that factors are things that are built on top of atomic vectors
+
+everything is built out of atomic vectors
+
+the four types of atomic vectors that we care about are character, integer, logical, and double (if you ask r about the type of vector for integer or double it says numeric)
+
+## lists
+
+in atomic vectors, everything inside of them has to be built out of the same type. If they aren't, they'll coerce one to match the other
+
+LISTS are how you mix types, and lists lead to dataframes
+
+```{r}
+dog1 <- list(name = "Bowie", 
+             weight_lb = 80.0, 
+             skills = c("nap", "eat", "more nap"))
+dog2 <- list(name = "Lassie",
+             weight_lb = 65.0,
+             skills = c("save tommy", "bark", "acting"))
+dogs <- list(dog1, dog2)
+```
+
+the above lists wouldn't make very nice data frames because each of those things in the list contains a different number of things. lists are more flexible than dataframe
+
+all dataframes are lists, not all lists are dataframes
+
+in the above example, each component of the list is an atomic vector, and then the last line is making a list out of lists
+
+dog1 is length 3
+
+length of dogs is 2 because at that level it has 2 things in it
+
+so linear models are lists also and can be navigated like lists
+
+if u wanna make a list use `list()`, if you wanna make an atomic vector use `c()`
+
+## Atomic vectors and subsetting
+
+```{r}
+# Start with two vectors: species and migration distances
+species <- c("Arctic tern", "Sooty shearwater", "Adelie penguin")
+migration_km <- c(96000, 64000, 18000)
+
+# What will these do?
+species[1] #print arctic tern
+migration_km[-1] #this would print the migration distances for sooty shearwater and adelie penguin (so not print the first thing)
+migration_km[1:2] #print the second two values
+species[c(1, 1, 1)] #make a chr vector of arte arte arte
+i <- 3 
+species[i] #print adelie penguin
+```
+
+**Q5:** How would you subset `migration_km` to get the second element?
+
+**Q6:** What are three ways to subset `migration_km` to get the first and second elements? Hint: use `:`, `c()`, and a negative number.
+
+```{r}
+migration_km[1:2]
+migration_km[-3]
+migration_km[c(1,2)]
+```
+
+**Q7:** How would you use the `length()` function to get the last element of a vector? Demonstrate with `species`.
+
+```{r}
+species[length(species)]
+```
+
+indexing by name
+
+```{r}
+# Instead of separate vectors for species and migration distances, we can
+# just name the elements of migration_km themselves.
+migration_km <- c(ArcticTern = 96000, SootyShearwater = 64000, AdeliePenguin = 18000)
+
+# One element by name
+migration_km["ArcticTern"]
+
+# Two elements by name (have to use c()! : won't work with names!)
+migration_km[c("ArcticTern", "SootyShearwater")]
+```
+
+**Q8:** Why doesn't this work? `migration_km[ArcticTern]`
+
+because arctic tern needs to be in quotes because it is a name not an element
+
+**Q9:** Are `migration_km[3]` and `migration_km["AdeliePenguin"]` equivalent? What if I remove an element from `migration_km` or shuffle it first?
+
+```{r}
+migration_km <- migration_km[sample(1:3,3)]
+```
+
+yes to the first, no to the second unless you're luky
+
+**Q10:** Here's a deliberately tricky question. What does the following give you?
+
+```{r}
+ArcticTern <- "SootyShearwater"
+migration_km[ArcticTern]
+```
+
+64000
+
+subsetting by logic
+
+```{r}
+# Temperature at a site for the first ten days of February
+dates <- paste("Feb", 1:10)
+temp_F <- c(54.0, 53.8, 53.1, 54, 71.9, 72.0, 54.0, 53.3, 53.9, 53.1)
+
+# Use logic to subset the first and second temperatures
+# This is a silly way to do this
+temp_F[c(TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE, FALSE)]
+# Slightly less silly, though still silly
+temp_F[c(rep(TRUE, 2), rep(FALSE, 8))]
+
+# Which days were warmer than the median?
+# This is typically how you'll subset by logic
+dates[temp_F > median(temp_F)]
+
+# Which days were "heat waves" (more than 2 standard deviations hotter 
+# than the median)
+is_heat_wave <- temp_F > median(temp_F) + 2*sd(temp_F)
+heat_wave_dates <- dates[is_heat_wave]
+heat_wave_dates
+```
+
+# lists
+
+`list[]` gives you another list
+
+also, if you do `dog1[1]` it's still gonna give you a list. single brackets in a list gives u a list
+
+```{r}
+# Remember our dogs?
+dog1 <- list(name = "Bowie", 
+             weight_lb = 80.0, 
+             skills = c("nap", "eat", "more nap"))
+dog2 <- list(name = "Lassie",
+             weight_lb = 65.0,
+             skills = c("save tommy", "bark", "acting"))
+dogs <- list(dog1, dog2)
+
+# Subsetting lists with `[` is very similar to atomic vectors, you're 
+# always getting a list back
+
+# Index by position
+dog1[1]
+dogs[1]
+
+# Index by name
+dog1["weight_lb"]
+dog2["skills"]
+
+# You can index by logic, too, but it's not terribly helpful here
+```
+
+### **Subsetting with `[[` and `$`**
+
+`[[` and `$` are how you pull the contents out of elements in a list. You can only do this on a single element, so some of the things you can do with `[` like `x[1:3]` and `x[c("a", "b")]` won\'t work.
+
+For the next examples, you\'ll need the `palmerpenguins` package installed. I DIDN'T DO THIS BC IT DOESN'T WORK ON MY VERSION OF R
+
+you can subset lists by `$` or `[[ ]]`
+
+within the double square brackets you use quotes:
+
+`penguins$species`is the same as `penguins[["species"]]`
+
+```{r}
+# Use `[[` to subset by position
+dog1[[2]]
+
+# Use `[[` to subset by name
+dog1[["weight_lb"]]
+
+# Use `$` to subset by name
+dog1$weight_lb
+```
+
+**Q15:** Why doesn\'t `dog1[[weight_lb]]` work? Use the error message to explain why.
+
+**Q16:** What\'s the type of `dog1[[2]]`? How is it different than `dog1[2]`?
+
+# exercises
+
+**E1:** Subset the second and fourth elements of `habitat` by position and by name.
+
+```{r}
+habitat <- c("intertidal", "chaparral", "urban", "redwood")
+habitat_by_position <- habitat[c(2,4)]
+habitat_by_name <- habitat[c("chaparral", "redwood")]
+
+#habitat_by_name returns NA NA, I think because there's nothing "in" the names? Max left the names out that's why
+```
+
+**E2:** Subset `habitat` to create a new vector that\'s the first element repeated four times and the second element repeated two times.
+
+```{r}
+habitat_repeats <- habitat[c(1,1,1,1,2,2)]
+```
+
+**E3:** You\'re running an analysis that involves drawing a bunch of random samples. Use `sample()` to generate 10 numbers between 1 and 4, and subset `habitat` using those numbers.
+
+```{r}
+habitat_positions <- sample(1:4, size =10, replace = TRUE)
+habitat_samples <- habitat[habitat_positions]
+```
