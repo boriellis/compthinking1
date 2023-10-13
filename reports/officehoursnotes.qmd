@@ -172,9 +172,9 @@ dog2["skills"]
 
 ### **Subsetting with `[[` and `$`**
 
-`[[` and `$` are how you pull the contents out of elements in a list. You can only do this on a single element, so some of the things you can do with `[` like `x[1:3]` and `x[c("a", "b")]` won\'t work.
+`[[` and `$` are how you pull the contents out of elements in a list. You can only do this on a single element, so some of the things you can do with `[` like `x[1:3]` and `x[c("a", "b")]` won't work.
 
-For the next examples, you\'ll need the `palmerpenguins` package installed. I DIDN'T DO THIS BC IT DOESN'T WORK ON MY VERSION OF R
+For the next examples, you'll need the `palmerpenguins` package installed. I DIDN'T DO THIS BC IT DOESN'T WORK ON MY VERSION OF R
 
 you can subset lists by `$` or `[[ ]]`
 
@@ -193,9 +193,9 @@ dog1[["weight_lb"]]
 dog1$weight_lb
 ```
 
-**Q15:** Why doesn\'t `dog1[[weight_lb]]` work? Use the error message to explain why.
+**Q15:** Why doesn't `dog1[[weight_lb]]` work? Use the error message to explain why.
 
-**Q16:** What\'s the type of `dog1[[2]]`? How is it different than `dog1[2]`?
+**Q16:** What's the type of `dog1[[2]]`? How is it different than `dog1[2]`?
 
 # exercises
 
@@ -209,13 +209,13 @@ habitat_by_name <- habitat[c("chaparral", "redwood")]
 #habitat_by_name returns NA NA, I think because there's nothing "in" the names? Max left the names out that's why
 ```
 
-**E2:** Subset `habitat` to create a new vector that\'s the first element repeated four times and the second element repeated two times.
+**E2:** Subset `habitat` to create a new vector that's the first element repeated four times and the second element repeated two times.
 
 ```{r}
 habitat_repeats <- habitat[c(1,1,1,1,2,2)]
 ```
 
-**E3:** You\'re running an analysis that involves drawing a bunch of random samples. Use `sample()` to generate 10 numbers between 1 and 4, and subset `habitat` using those numbers.
+**E3:** You're running an analysis that involves drawing a bunch of random samples. Use `sample()` to generate 10 numbers between 1 and 4, and subset `habitat` using those numbers.
 
 ```{r}
 habitat_positions <- sample(1:4, size =10, replace = TRUE)

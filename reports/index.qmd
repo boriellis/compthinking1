@@ -71,15 +71,9 @@ How could you change the first line of code in the following chunk so that `med
 
 ```{r}
 quad_counts <- c(2L, 19L, 4L, 5L, 5L, 12L, 5L, 7L)
-valid_quads <- c(1, 2, 3, 5, 7) # this is where I got Stuck
+valid_quads <- c(1, 2, 3, 5, 7) 
 quad_counts2 <- quad_counts[valid_quads]
 median_count <- median(quad_counts2)
 ```
 
-Questions for max -
-
-what the hell is going on with PATs and when do I have to make new ones and stuff
-
-how do I use R projects to work off of multiple computers?
-
-I'm stuck on question 3 :(
+I just changed the 0L to a 5L so that the median position was a 5L when I sampled the 1st, 2nd, 3rd, 5th, and 7th positions
